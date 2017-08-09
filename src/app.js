@@ -8,11 +8,14 @@ import passport from 'passport';
 import session from 'express-session';
 import expressValidator from 'express-validator';
 import cors from 'cors';
+import redis from 'redis';
+import connect from 'connect-redis';
 
 import GoogleStrategy from './passport/google';
 import routes from './routes/index';
 import { log } from './util/logger';
 import { forbidden } from './constants/errorTypes';
+import cacheConfig from './config/cache';
 
 const app = express();
 
@@ -52,11 +55,19 @@ app.use(
     })
 );
 
+const redisClient = redis.createClient();
+const redisStore = connect(session);
+
 app.use(
     session({
         secret: 'mybudgettracker',
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        store: new redisStore({
+            host: cacheConfig.host,
+            port: cacheConfig.port,
+            client: redisClient
+        })
     })
 );
 
