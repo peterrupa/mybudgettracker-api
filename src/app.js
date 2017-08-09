@@ -35,7 +35,8 @@ const CORS_WHITELIST = [
     'http://localhost:3000',
     'http://localhost:8000',
     'localhost:3000',
-    'localhost:8000'
+    'localhost:8000',
+    'chrome-extension://aicmkgpgakddgnaphhhpliifpcfhicfo'
 ];
 
 app.use(
