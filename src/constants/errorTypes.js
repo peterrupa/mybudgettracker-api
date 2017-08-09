@@ -38,3 +38,13 @@ export const noUserFound = userId => {
         userId
     };
 };
+
+export const categoryExisting = {
+    status: 400,
+    message: 'CATEGORY_EXISTING_AS_DEFAULT'
+};
+
+export const categoryNotExists = {
+    status: 400,
+    message: 'CATEGORY_DOES_NOT_EXIST'
+};

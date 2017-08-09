@@ -20,6 +20,6 @@ const attributes = {
 
 const options = {};
 
-const categories = db.define('categories', attributes, options);
+const Category = db.define('categories', attributes, options);
 
-export default categories;
+export default Category;

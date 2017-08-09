@@ -19,4 +19,11 @@ router.delete(
     userController.deleteCustomCategory
 );
 
+router.get('/:userGoogleId/transaction', userController.getTransactions);
+router.post('/:userGoogleId/transaction', userController.addTransaction);
+router.delete(
+    '/:userGoogleId/transaction/:transactionId',
+    userController.deleteTransaction
+);
+
 export default router;
