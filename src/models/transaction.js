@@ -8,7 +8,7 @@ const attributes = {
         allowNull: false
     },
     type: {
-        type: Sequelize.ENUM('income', 'expense'),
+        type: Sequelize.ENUM('income', 'expense', 'updateCash'),
         allowNull: false
     },
     amount: {
@@ -25,5 +25,21 @@ const attributes = {
 const options = {};
 
 const Transaction = db.define('transactions', attributes, options);
+
+Transaction.afterCreate(async transaction => {
+    const user = await transaction.getUser();
+
+    const cash = await user.getCash();
+    const newCashValue =
+        transaction.type === 'income'
+            ? cash.cashOnHand + transaction.amount
+            : transaction.type === 'expense'
+              ? cash.cashOnHand - transaction.amount
+              : transaction.amount;
+
+    await cash.update({
+        cashOnHand: newCashValue
+    });
+});
 
 export default Transaction;

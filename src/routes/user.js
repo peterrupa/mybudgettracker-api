@@ -26,4 +26,8 @@ router.delete(
     userController.deleteTransaction
 );
 
+router.get('/:userGoogleId/cash', userController.getCashOnHand);
+router.post('/:userGoogleId/cash', userController.addCashOnHand);
+router.put('/:userGoogleId/cash', userController.updateCashOnHand);
+
 export default router;

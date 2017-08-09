@@ -1,5 +1,8 @@
 {
     "defaultCategories": [{
+        "name": "Manual Edit",
+        "icon": "class-icon-manual-edit"
+    }, {
         "name": "Food",
         "icon": "class-icon-food"
     }, {

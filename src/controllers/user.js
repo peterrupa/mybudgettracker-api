@@ -102,6 +102,7 @@ export const updateCustomCategory = async (req, res, next) => {
     }
 };
 
+// @TODO: hide instead of delete
 export const deleteCustomCategory = async (req, res, next) => {
     const { userGoogleId, categoryId } = req.params;
 
@@ -222,6 +223,91 @@ export const deleteTransaction = async (req, res, next) => {
         await transaction.destroy();
 
         res.send(transaction);
+    } catch (e) {
+        next(e);
+    }
+};
+
+export const getCashOnHand = async (req, res, next) => {
+    try {
+        const { userGoogleId } = req.params;
+
+        const user = await User.findById(userGoogleId);
+
+        if (!user) {
+            throw resourceNotFound;
+        }
+
+        const cashOnHand = await user.getCash();
+
+        res.send(cashOnHand);
+    } catch (e) {
+        next(e);
+    }
+};
+
+export const addCashOnHand = async (req, res, next) => {
+    req.checkBody('cashOnHand').notEmpty();
+
+    try {
+        const validationResult = await req.getValidationResult();
+
+        if (!validationResult.isEmpty()) {
+            throw missingFields(validationResult);
+        }
+
+        const { userGoogleId } = req.params;
+        const { cashOnHand } = req.body;
+
+        const user = await User.findById(userGoogleId);
+
+        if (!user) {
+            throw resourceNotFound;
+        }
+
+        const cashOnHandInstance = await user.createCash({
+            cashOnHand
+        });
+
+        res.send(cashOnHandInstance);
+    } catch (e) {
+        next(e);
+    }
+};
+
+export const updateCashOnHand = async (req, res, next) => {
+    req.checkBody('cashOnHand').notEmpty();
+
+    try {
+        const validationResult = await req.getValidationResult();
+
+        if (!validationResult.isEmpty()) {
+            throw missingFields(validationResult);
+        }
+
+        const { userGoogleId } = req.params;
+        const { cashOnHand } = req.body;
+
+        const user = await User.findById(userGoogleId);
+
+        if (!user) {
+            throw resourceNotFound;
+        }
+
+        await user.createTransaction({
+            categoryId: 1,
+            name: 'Edited Cash on Hand',
+            type: 'updateCash',
+            amount: cashOnHand
+        });
+
+        const cashOnHandInstance = await user.getCash();
+
+        const updatedCashOnHand = await cashOnHandInstance.update({
+            cashOnHand
+        });
+
+        res.send(updatedCashOnHand);
     } catch (e) {
         next(e);
     }
