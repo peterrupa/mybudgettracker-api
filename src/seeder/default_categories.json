@@ -1,0 +1,9 @@
+{
+    "defaultCategories": [{
+        "name": "Food",
+        "icon": "class-icon-food"
+    }, {
+        "name": "Transportation",
+        "icon": "class-icon-transportation"
+    }]
+}
