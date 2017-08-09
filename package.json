@@ -1,0 +1,51 @@
+{
+  "name": "mybudgetracker-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "DEBUG=mybudgetracker-api:server NODE_ENV=development PORT=8000 nodemon ./src/bin/www --exec babel-node",
+    "build": "babel src --out-dir dist --copy-files",
+    "prettify": "prettier --tab-width 4 --single-quote --write \"./src/**/*.js\"",
+    "precommit": "lint-staged",
+    "prepush": "lint-staged",
+    "lint": "eslint -c .eslintrc.json src/**",
+    "fixcode": "eslint -c .eslintrc.json --fix src/**",
+    "reset": "NODE_ENV=development babel-node src/tools/resetDb.js",
+    "seed": "NODE_ENV=development babel-node src/seeder/seeder.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "cors": "^2.8.3",
+    "express": "~4.13.1",
+    "express-session": "^1.15.5",
+    "express-validator": "^3.1.3",
+    "fs-promise": "^2.0.3",
+    "morgan": "~1.6.1",
+    "mysql": "^2.13.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "sequelize": "^3.30.4",
+    "serve-favicon": "^2.3.2",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "colors": "^1.1.2",
+    "debug": "^2.6.3",
+    "eslint": "^3.19.0",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.0",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.1.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --tab-width 4 --single-quote --write",
+      "git add",
+      "npm run lint"
+    ]
+  }
+}

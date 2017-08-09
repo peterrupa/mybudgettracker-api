@@ -1,0 +1,19 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "no-extra-parens": ["error", "all"],
+        "curly": ["error", "all"],
+        "eqeqeq": ["error", "always"]
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    }
+}
